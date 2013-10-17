@@ -4,8 +4,8 @@
  * @Entity
  * @Table(name="articles")
  */
-class Article
-{
+class Article {
+
     /**
      * @Id
      * @Column(type="integer")
@@ -15,10 +15,16 @@ class Article
     protected $id;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", unique=true)
      * @var string
      */
     protected $title;
+
+    /**
+     * @Column(type="string")
+     * @var string
+     */
+    protected $slug;
 
     /**
      * @Column(type="text")
@@ -28,8 +34,44 @@ class Article
 
     /**
      * @Column(type="datetime")
-     * @var DateTiem
+     * @var DateTime
      */
     protected $created;
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getTitle() {
+        return $this->title;
+    }
+
+    public function setTitle($title) {
+        $this->title = $title;
+    }
+
+    public function getContent() {
+        return $this->content;
+    }
+
+    public function setContent($content) {
+        $this->content = $content;
+    }
+
+    public function getCreated() {
+        return $this->created;
+    }
+
+    public function setCreated(DateTime $created) {
+        $this->created = $created;
+    }
+
+    public function getSlug() {
+        return $this->slug;
+    }
+
+    public function setSlug($slug) {
+        $this->slug = $slug;
+    }
 
 }

@@ -1,0 +1,15 @@
+{% extends template %}
+
+{% block content %}
+<article>
+    <header>
+        <h1>{{ article.title }}</h1>
+        <p> Published on
+            <time pubdate datetime="{{ article.created.format('c') }}">
+                {{ article.created.format('F d, Y') }}
+            </time>
+        </p>
+    </header>
+    {{ article.content }}
+</article>
+{% endblock %}
