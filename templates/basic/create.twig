@@ -1,0 +1,19 @@
+{% extends template %}
+
+{% block content %}
+<section>
+    <h1>Create New Article</h1>
+    <form method="post" data-pjax>
+        <fieldset>
+            <legend>Write your new article and click post when done.</legend>
+            <label for="title">Title</label><br />
+            <input type="text" name="title" id="title" />
+            <br />
+            <label for="content"></label>
+            <textarea name="content" id="content" cols="50" rows="10"></textarea>
+            <br />
+            <input type="submit" value="Post" />
+        </fieldset>
+    </form>
+</section>
+{% endblock %}

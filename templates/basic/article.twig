@@ -7,9 +7,9 @@
         <p> Published on
             <time pubdate datetime="{{ article.created.format('c') }}">
                 {{ article.created.format('F d, Y') }}
-            </time>
-        </p>
-    </header>
+                </time>
+            </p>
+        </header>
     {{ article.content }}
-</article>
+    </article>
 {% endblock %}
