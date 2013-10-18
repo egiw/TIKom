@@ -8,13 +8,13 @@ use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
+use \Twig_Extension_Debug;
 
 /**
  * 
  * @property Twig $view Twig
  */
-class Application extends Slim
-{
+class Application extends Slim {
 
     /**
      * Doctrine EntityManager
@@ -29,17 +29,22 @@ class Application extends Slim
             'view' => 'Slim\Views\Twig'
         ));
 
+        $this->setName('TikomLab');
+
         $this->view->parserOptions = array(
             'charset' => 'utf-8',
             'cache' => realpath('../templates/cache'),
             'auto_reload' => true,
             'strict_variables' => false,
-            'auto_escape' => true
+            'auto_escape' => true,
+            'debug' => true
         );
 
-        $this->view->parserExtensions = array(new TwigExtension());
+        $this->view->parserExtensions = array(
+            new TwigExtension(),
+            new Twig_Extension_Debug()
+        );
 
-        $this->setName('TikomLab');
 
         $isDevMode = true;
         $config = Setup::createAnnotationMetadataConfiguration(array(realpath('../src')), $isDevMode);
@@ -61,6 +66,9 @@ class Application extends Slim
         $this->get('/:slug', array($this, 'article'))->name('article');
         $this->get('/create', array($this, 'create'))->name('create');
         $this->post('/create', array($this, 'store'));
+        $this->get('/manage', array($this, 'manage'));
+        
+        $this->notFound(array($this, 'error404'));
     }
 
     public function homepage()
@@ -97,13 +105,18 @@ class Application extends Slim
         $article = new Article();
         $article->setTitle($data['title']);
         $article->setContent($data['content']);
-        $article->setCreated(new DateTime('now'));
-        $article->setSlug($this->slugify($data['title']));
 
         $this->em->persist($article);
         $this->em->flush();
 
         $this->redirect('/');
+    }
+
+    public function manage()
+    {
+        $rep = $this->em->getRepository('Article');
+        $articles = $rep->findAll();
+        $this->render('manage.twig', array('articles' => $articles));
     }
 
     public function beforeRouter()
@@ -119,6 +132,11 @@ class Application extends Slim
         $this->response()->header('X-PJAX-URL', $this->request()->getResourceUri());
     }
 
+    public function error404()
+    {
+        $this->render('error/404.twig');
+    }
+
     /**
      * 
      * @return \Monolog\Logger
@@ -128,30 +146,6 @@ class Application extends Slim
         $log = new Logger($this->getName());
         $log->pushHandler(new StreamHandler('../logs/app.log', LogLevel::DEBUG));
         return $log;
-    }
-
-    private function slugify($text)
-    {
-        // replace non letter or digits by -
-        $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
-
-        // trim
-        $text = trim($text, '-');
-
-        // transliterate
-        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-
-        // lowercase
-        $text = strtolower($text);
-
-        // remove unwanted characters
-        $text = preg_replace('~[^-\w]+~', '', $text);
-
-        if (empty($text)) {
-            return 'n-a';
-        }
-
-        return $text;
     }
 
 }

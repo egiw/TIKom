@@ -1,5 +1,10 @@
 {% extends template %}
 
+{% block title%}
+{{ parent() }}
+:: Write Article
+{% endblock %}
+
 {% block content %}
 <section>
     <h1>Create New Article</h1>
@@ -7,13 +12,19 @@
         <fieldset>
             <legend>Write your new article and click post when done.</legend>
             <label for="title">Title</label><br />
-            <input type="text" name="title" id="title" />
-            <br />
-            <label for="content"></label>
+            <input type="text" name="title" id="title" size="50"/>
+            <br /><br />
             <textarea name="content" id="content" cols="50" rows="10"></textarea>
             <br />
             <input type="submit" value="Post" />
         </fieldset>
     </form>
 </section>
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        CKEDITOR.replace('content');
+    </script>
 {% endblock %}

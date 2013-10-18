@@ -1,5 +1,10 @@
 {% extends template %}
 
+{% block title %}
+{{ parent() }}
+:: Homepage
+{% endblock %}
+
 {% block content %}
 <nav>
     <h1>Recent Articles</h1>
@@ -16,4 +21,5 @@
         {% endfor %}
             </ul>
         </nav>
+
 {% endblock %}

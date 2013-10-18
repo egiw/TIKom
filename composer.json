@@ -19,6 +19,8 @@
         "doctrine/orm": "2.3.4"
     },
     "autoload": {
-        "psr-0": {"": "src/"}
+        "psr-0": {
+            "": ["src/", "application/"]
+        }
     }
 }

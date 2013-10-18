@@ -1,0 +1,28 @@
+{% extends template %}
+
+{% block title %}
+    {{ parent() }}
+    :: Manage
+{% endblock %}
+
+{% block content %}
+    <h1>Manage</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td>{{ article.id }}</td>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.created.format('d/m/Y') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
