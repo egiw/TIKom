@@ -1,12 +1,22 @@
 {% extends template %}
 
 {% block title %}
-    {{ parent() }}
-    :: Manage
+    {{ parent() }} &HorizontalLine; Manage
 {% endblock %}
 
 {% block content %}
     <h1>Manage</h1>
+    
+    <ul>
+        {% for page in range(1, pageCount) %}
+            <li {{ (page == currentPage)? "class='active'" }}>
+                <a href="{{ urlFor('manage', {'page': page}) }}">
+                    {{ page }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    
     <table>
         <thead>
             <tr>

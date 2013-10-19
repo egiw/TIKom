@@ -1,13 +1,21 @@
 {% extends template %}
 
 {% block title %}
-{{ parent() }}
-:: Homepage
+    {{ parent() }} &HorizontalLine; Homepage
 {% endblock %}
 
 {% block content %}
 <nav>
     <h1>Recent Articles</h1>
+    
+    {% set nextPage = currentPage + 1 %}
+    {% set previousPage = currentPage - 1 %}
+    {% if previousPage != 0 %}
+        <a href="{{ urlFor('homepage', {'page': previousPage}) }}">&NestedLessLess; Previous</a>
+    {% endif %}
+    {% if nextPage <= totalPage %}
+        <a href="{{ urlFor('homepage', {'page': nextPage}) }}">Next &NestedGreaterGreater;</a>
+    {% endif %}
     <ul>
         {% for article in articles %}
             <li>
@@ -19,7 +27,8 @@
                     </a>
                 </li>
         {% endfor %}
-            </ul>
-        </nav>
+    </ul>
+
+</nav>
 
 {% endblock %}

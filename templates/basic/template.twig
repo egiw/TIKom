@@ -6,23 +6,73 @@
         <link rel="stylesheet" href="/css/main.css" />
     </head>
     <body>
-        <header>
-            <a href="{{ urlFor('homepage') }}">
-                <h1 style="font-size: 35px;font-family: monospace;">
-                    <span style="color: #70a23e">{ TITI</span><span style="color: #999">KOMA;}</span>
-                </h1>
-            </a>
-            <img src="/img/ajax-loader.gif" alt="" style="visibility: hidden;"
-                 id="ajax-loader"/>
-        </header>
-        <div id="pjax-container">
+        <div id="wrap">
+            <header>
+                <div id="main-header">
+                    <a href="javascript:void(0)" id="nav-toggle">&equiv;</a>
+                    <h1 class="logo" id="main-logo">
+                        <a href="{{ urlFor('homepage') }}">
+                            <span style="color: #70a23e">{ TITI</span><span style="color: #999">KOMA;}</span>
+                        </a>
+                    </h1>
+                    <form action="/search" method="get" id="search-form" data-pjax>
+                        <input type="text" name="q" id="input-search" size="23"
+                               placeholder="Type search here..."/><input 
+                               type="image" 
+                               src="/img/magnifier.png" 
+                               alt="" />
+
+                    </form>
+                </div>
+                <nav>
+                    <div id="main-navigation" class="open">
+                        <ul class="nav">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Portofolio</a></li>
+                        </ul>
+                    </div>
+                    <div id="hline"></div>
+                </nav>
+
+                <div id="loading">
+                    <div class="loading-bar">
+                        <div class="rolling"></div>
+                    </div>
+                    <div class="loading-bar">
+                        <div class="rolling dadu2"></div>
+                    </div>
+                    <div class="loading-bar">
+                        <div class="rolling dadu3"></div>
+                    </div>
+                    <div class="loading-bar">
+                        <div class="rolling dadu4"></div>
+                    </div>
+                </div>
+            </header>
+            <div id="pjax-container">
                 {{ block('content') }}
+                </div>
+                <div id="footer-push"></div>
             </div>
-            {% block scripts %}
-                <script type="text/javascript" src="/lib/jquery/jquery-1.10.2.min.js"></script>
-                <script type="text/javascript" src="/lib/ckeditor/ckeditor.js"></script>
-                <script type="text/javascript" src="/lib/jquery/jquery.pjax.js"></script>
-                <script type="text/javascript" src="/js/main.js"></script>
-            {% endblock %}
+
+            <footer id="main-footer">
+                <small id="copyright">&copy; 2013.
+                    <strong>
+                        <a href="{{ urlFor('homepage') }}">
+                            <span style="color: #70a23e;font-family: monospace;">{ TITI</span><span style="color: #999;font-family: monospace;">KOMA; }</span>
+                        </a>
+                    </strong>
+                    Web Development.
+                    <a href="#">Feedback</a>
+                </small>
+            </footer>
+
+        {% block scripts %}
+            <script type="text/javascript" src="/lib/jquery/jquery-1.10.2.min.js"></script>
+            <script type="text/javascript" src="/lib/ckeditor/ckeditor.js"></script>
+            <script type="text/javascript" src="/lib/jquery/jquery.pjax.js"></script>
+            <script type="text/javascript" src="/js/main.js"></script>
+        {% endblock %}
+
         </body>
     </html>

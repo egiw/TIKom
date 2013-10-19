@@ -3,7 +3,7 @@ $.pjax.defaults.timeout = 0;
 $(document).pjax("a", "#pjax-container");
 
 $(document).on('pjax:start', function(e) {
-    $("#ajax-loader").css("visibility", "visible");
+    $('#loading').fadeTo('fast', 1).addClass('active');
 });
 
 $(document).on('pjax:error', function(event, response) {
@@ -13,9 +13,17 @@ $(document).on('pjax:error', function(event, response) {
 });
 
 $(document).on('pjax:end', function(e) {
-    $("#ajax-loader").css("visibility", "hidden");
+    $('#loading').fadeTo('normal', 0, function() {
+        $(this).removeClass('active');
+    });
 });
 
 $(document).on('submit', 'form[data-pjax]', function(e) {
     $.pjax.submit(e, '#pjax-container');
+});
+
+$(document).ready(function() {
+    $("#nav-toggle").click(function() {
+        $("#main-navigation").slideToggle(200);
+    });
 });

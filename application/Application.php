@@ -8,19 +8,27 @@ use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use \Twig_Extension_Debug;
 
 /**
  * 
  * @property Twig $view Twig
  */
-class Application extends Slim {
+class Application extends Slim
+{
 
     /**
      * Doctrine EntityManager
      * @var EntityManager;
      */
     protected $em;
+
+    /**
+     * Monolog Logger
+     * @var Logger
+     */
+    protected $logger;
 
     public function __construct(array $userSettings = array())
     {
@@ -59,26 +67,45 @@ class Application extends Slim {
 
         $this->em = EntityManager::create($conn, $config);
 
+        $this->notFound(array($this, 'error404'));
+
         $this->hook('slim.before.router', array($this, 'beforeRouter'));
         $this->hook('slim.after.router', array($this, 'afterRouter'));
 
-        $this->get('/', array($this, 'homepage'))->name('homepage');
+        $this->get('/(:page)', array($this, 'homepage'))
+                ->name('homepage')
+                ->conditions(array('page' => '\d+'));
+
         $this->get('/:slug', array($this, 'article'))->name('article');
         $this->get('/create', array($this, 'create'))->name('create');
         $this->post('/create', array($this, 'store'));
-        $this->get('/manage', array($this, 'manage'));
-        
-        $this->notFound(array($this, 'error404'));
+        $this->get('/search', array($this, 'search'))->name('search');
+        $this->get('/manage(/page-:page)', array($this, 'manage'))
+                ->name('manage')->conditions(array('page' => '\d+'));
     }
 
-    public function homepage()
+    /**
+     * 
+     * @param int $page
+     */
+    public function homepage($page = 1)
     {
-        $this->log->info("Slim-Skeleton '/' route");
+        $limit = 5;
+        $offset = ($page - 1) * $limit;
 
-        $articleRepo = $this->em->getRepository('Article');
-        $articles = $articleRepo->findAll();
+        $dql = "SELECT a FROM Article a ORDER BY a.created DESC";
+        $query = $this->em->createQuery($dql)
+                ->setFirstResult($offset)
+                ->setMaxResults($limit);
+
+        $articles = new Paginator($query);
+        $count = count($articles);
+        $totalPage = ceil($count / $limit);
+
         $this->render('index.twig', array(
-            'articles' => $articles
+            'articles' => $articles,
+            'totalPage' => $totalPage,
+            'currentPage' => $page
         ));
     }
 
@@ -112,11 +139,33 @@ class Application extends Slim {
         $this->redirect('/');
     }
 
-    public function manage()
+    public function manage($page = 1)
     {
-        $rep = $this->em->getRepository('Article');
-        $articles = $rep->findAll();
-        $this->render('manage.twig', array('articles' => $articles));
+        $limit = 5;
+        $offset = (($page - 1) * $limit);
+
+        $dql = "SELECT a FROM Article a";
+        $query = $this->em->createQuery($dql)
+                ->setFirstResult($offset)
+                ->setMaxResults($limit);
+        $articles = new Paginator($query);
+
+        $count = count($articles);
+
+        $pageCount = ceil($count / $limit);
+
+        $this->render('manage.twig', array(
+            'articles' => $articles,
+            'pageCount' => $pageCount,
+            'currentPage' => (int) $page
+        ));
+    }
+
+    public function search()
+    {
+        $q = $this->request()->get('q');
+        
+        $this->render('search.twig', array('q' => $q));
     }
 
     public function beforeRouter()
@@ -129,7 +178,7 @@ class Application extends Slim {
 
     public function afterRouter()
     {
-        $this->response()->header('X-PJAX-URL', $this->request()->getResourceUri());
+        $this->response()->header('X-PJAX-URL', $_SERVER['REQUEST_URI']);
     }
 
     public function error404()

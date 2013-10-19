@@ -26,7 +26,6 @@ table{border-collapse:collapse;border-spacing:0;}
 hr{display:block;height:1px;border:0;border-top:1px solid #cccccc;margin:1em 0;padding:0;}
 input,select{vertical-align:middle;}
 html{ background: #EDEDED; height: 100%; }
-body{background:#FFF;margin:0 auto;min-height:100%;padding:0 30px;width:440px;color:#666;font:14px/23px Arial,Verdana,sans-serif;}
 h1,h2,h3,p,ul,ol,form,section{margin:0 0 20px 0;}
 h1{color:#333;font-size:20px;}
 h2,h3{color:#333;font-size:14px;}
@@ -37,8 +36,212 @@ code,kbd{background:#EEE;border:1px solid #DDD;border:1px solid #DDD;border-radi
 pre{background:#EEE;border:1px solid #DDD;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;padding:5px 10px;color:#666;font-size:12px;}
 pre code{background:transparent;border:none;padding:0;}
 a{color:#70a23e; text-decoration: none;}
-header{padding: 30px 0;text-align:center;}
+header{text-align:center;}
 
 html {
     background-image: url('/img/pattern-bg.jpg');
+    height: 100%;
 }
+
+body{
+    margin:0 auto;
+    width:460px;
+    color:#666;
+    font:14px/23px Arial,Verdana,sans-serif;
+    height: 100%;
+    cursor: url('/img/frfoxbusyback.ani'), auto;
+}
+
+#wrap {
+    background:#FFF;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin-bottom: -25px;
+}
+
+#footer-push {
+    height: 25px;
+}
+
+li.active a {
+    font-weight: bold;
+}
+
+#main-footer{
+    background-color: #333;
+    height: 25px;
+    text-align: center;
+}
+
+#main-footer #copyright{
+    color: #ddd;
+    font-size: x-small;
+}
+
+#pjax-container {
+    padding: 20px 15px 15px 15px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-left: 1px solid #aaa;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+    background: #333;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #ddd;
+    opacity: .5;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #ddd;
+    opacity: .5;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #ddd;
+    opacity: .5;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #ddd;
+    opacity: .5;
+}
+
+#main-logo {
+    font-size: 22px;
+    font-family: monospace;
+    font-family: monospace;
+    padding: 5px;
+    margin: 0;
+    float: left;
+}
+
+#main-header {
+    background: url('/img/header-bg.jpg') repeat-x;
+    text-align: left;
+    padding: 0;
+    overflow: hidden;
+}
+
+#search-form {
+    margin: 0;
+    float: right;
+}
+
+#search-form input {
+    padding: 4px;
+    background-color: #255077;
+    border: 1px solid #24496B;
+    margin: 0;
+    height: 22px;
+    color: #ddd;
+}
+
+#search-form #input-search {
+    padding-left: 10px;
+}
+
+#search-form input:focus {
+    outline: none;
+}
+
+#main-navigation {
+    background: whitesmoke;
+    margin: 0;
+    display: none;
+}
+
+#main-navigation .nav {
+    margin: 0;
+}
+
+#nav-toggle {
+    float: left;
+    font-size: 30px;
+    padding: 5px 8px;
+    color: #ddd;
+}
+
+#hline {
+    height: 1px;
+    background: #ccc;
+}
+
+@-webkit-keyframes    load{
+    0%   {margin-left:0%;opacity:0;}
+15%     {opacity: 1}
+25%  {margin-left:55%;}
+50%  {margin-left:60%;}
+75%     {opacity: 1}
+80% {margin-left:100%;opacity:0;}
+}
+@-webkit-keyframes    load2{
+    0%   {margin-left:-20%;opacity:0;}
+15%     {opacity: 1}
+30%  {margin-left:50%;}
+55%  {margin-left:55%;}
+75%     {opacity: 1}
+90% {margin-left:100%;opacity:0;}
+}
+@-webkit-keyframes    load3{
+    0%   {margin-left:-30%;opacity:0;}
+15%     {opacity: 1}
+35%  {margin-left:45%;}
+60%  {margin-left:50%;}
+75%     {opacity: 1}
+100% {margin-left:100%;opacity:0;}
+}
+@-webkit-keyframes    load4{
+    0%   {margin-left:-40%;opacity:0;}
+15%     {opacity: 1}
+40%  {margin-left:40%;}
+65%  {margin-left:45%;}
+75%     {opacity: 1}
+100% {margin-left:80%;opacity:0;}
+}
+.rolling{
+    background:#000;
+    width:5px;
+    height:5px;
+    opacity:0;
+    border-radius: 20px;
+
+}
+
+#loading.active .rolling {
+    -webkit-animation: load 3s linear ;
+    -webkit-animation-iteration-count: infinite;
+}
+
+#loading.active .dadu2 {
+    -webkit-animation: load2 3s linear ;
+    -webkit-animation-iteration-count: infinite;
+}
+
+#loading.active .dadu3 {
+    -webkit-animation: load3 3s linear ;
+    -webkit-animation-iteration-count: infinite;
+}
+
+#loading.active .dadu4 {
+    -webkit-animation: load4 3s linear ;
+    -webkit-animation-iteration-count: infinite;
+}
+
+.loading-bar{
+    width:300px;
+    position: absolute;
+    overflow: hidden;
+}
+#loading{
+    margin: 10px auto;
+    width: 300px;
+}
+#loading p{text-align: center}

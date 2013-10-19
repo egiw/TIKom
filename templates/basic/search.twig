@@ -1,0 +1,9 @@
+{% extends template %}
+
+{% block title %}
+    Search result: {{ q }} &HorizontalLine; {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <h1>Search result for "{{ q }}"</h1>
+{% endblock %}
