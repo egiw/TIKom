@@ -6,29 +6,42 @@
 
 {% block content %}
 <nav>
-    <h1>Recent Articles</h1>
-    
-    {% set nextPage = currentPage + 1 %}
-    {% set previousPage = currentPage - 1 %}
-    {% if previousPage != 0 %}
-        <a href="{{ urlFor('homepage', {'page': previousPage}) }}">&NestedLessLess; Previous</a>
-    {% endif %}
-    {% if nextPage <= totalPage %}
-        <a href="{{ urlFor('homepage', {'page': nextPage}) }}">Next &NestedGreaterGreater;</a>
-    {% endif %}
-    <ul>
-        {% for article in articles %}
-            <li>
-                <time pubdate datetime="{{ article.created.format('c') }}">
-                    ({{article.created.format('d/m/Y') }})
-                </time>
-                <a href="{{ urlFor('article', {'slug': article.slug}) }}" >
-                    {{ article.title }}
-                    </a>
-                </li>
-        {% endfor %}
-    </ul>
+    <div class="header">
+        <h1>Recent Articles</h1>
 
-</nav>
+        <div class="pagination">
+            {% set nextPage = currentPage + 1 %}
+            {% set previousPage = currentPage - 1 %}
+            {% if previousPage != 0 %}
+                <!-- <a href="">«»</a> -->
+                <a class="control"
+                   href="{{ urlFor('homepage', {'page': previousPage}) }}">‹</a>
+            {% endif %}
+            {% for i in range(1, totalPage) %}
+                {% set active = (i==currentPage)? "active" %}
+                <a class="control-number {{active}}" 
+                   href="{{ urlFor('homepage', {'page': i}) }}">
+                    {{ i }}</a>
+            {% endfor %}
+            {% if nextPage <= totalPage %}
+                <a class="control" 
+                   href="{{ urlFor('homepage', {'page': nextPage}) }}">›</a>
+            {% endif %}
+            </div>
+        </div>
+        <ul id="article-list">
+        {% for article in articles %}
+                <li>
+                    <time pubdate datetime="{{ article.created.format('c') }}">
+                        <a href="{{ urlFor('article', {'slug': article.slug}) }}" >
+                        {{ article.title }}
+                            </a>
+                        </time>
+                    </li>
+
+        {% endfor %}
+                </ul>
+
+            </nav>
 
 {% endblock %}

@@ -80,7 +80,7 @@ li.active a {
 }
 
 #pjax-container {
-    padding: 20px 15px 15px 15px;
+    padding: 20px 0 15px 0;
 }
 
 ::-webkit-scrollbar {
@@ -245,3 +245,35 @@ li.active a {
     width: 300px;
 }
 #loading p{text-align: center}
+
+.header {
+    margin: 0;
+    background-color: #eee;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+    font-family: Helvetica, sans-serif;
+}
+.header h1 {
+    font-size: small;
+    margin: 0;
+    padding: 2px 10px;
+    float: left;
+}
+
+.pagination {
+    float: right;
+    padding: 2px 10px;
+    letter-spacing: 5px;
+}
+
+.pagination a.active {
+    font-weight: bold;
+}
+
+.pagination .control-number {
+    font-size: smaller;
+}
+.control {
+    font-size: medium;
+}
