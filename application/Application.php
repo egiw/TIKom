@@ -8,15 +8,13 @@ use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use \Twig_Extension_Debug;
 
 /**
  * 
  * @property Twig $view Twig
  */
-class Application extends Slim
-{
+class Application extends Slim {
 
     /**
      * Doctrine EntityManager
@@ -62,7 +60,11 @@ class Application extends Slim
             'host' => 'localhost',
             'user' => 'root',
             'password' => '',
-            'dbname' => 'Blog'
+            'dbname' => 'Blog',
+            'charset' => 'utf8',
+            'driverOptions' => array(
+                1002 => 'SET NAMES utf8'
+            )
         );
 
         $this->em = EntityManager::create($conn, $config);
@@ -98,14 +100,12 @@ class Application extends Slim
                 ->setFirstResult($offset)
                 ->setMaxResults($limit);
 
-        $articles = new Paginator($query);
+        $articles = new Paginator($query, $page);
         $count = count($articles);
         $totalPage = ceil($count / $limit);
 
         $this->render('index.twig', array(
             'articles' => $articles,
-            'totalPage' => $totalPage,
-            'currentPage' => $page
         ));
     }
 
@@ -149,7 +149,6 @@ class Application extends Slim
                 ->setFirstResult($offset)
                 ->setMaxResults($limit);
         $articles = new Paginator($query);
-
         $count = count($articles);
 
         $pageCount = ceil($count / $limit);
@@ -164,7 +163,7 @@ class Application extends Slim
     public function search()
     {
         $q = $this->request()->get('q');
-        
+
         $this->render('search.twig', array('q' => $q));
     }
 

@@ -216,22 +216,22 @@ li.active a {
 }
 
 #loading.active .rolling {
-    -webkit-animation: load 3s linear ;
+    -webkit-animation: load 2.5s linear ;
     -webkit-animation-iteration-count: infinite;
 }
 
 #loading.active .dadu2 {
-    -webkit-animation: load2 3s linear ;
+    -webkit-animation: load2 2.5s linear ;
     -webkit-animation-iteration-count: infinite;
 }
 
 #loading.active .dadu3 {
-    -webkit-animation: load3 3s linear ;
+    -webkit-animation: load3 2.5s linear ;
     -webkit-animation-iteration-count: infinite;
 }
 
 #loading.active .dadu4 {
-    -webkit-animation: load4 3s linear ;
+    -webkit-animation: load4 2.5s linear ;
     -webkit-animation-iteration-count: infinite;
 }
 
@@ -264,7 +264,6 @@ li.active a {
 .pagination {
     float: right;
     padding: 2px 10px;
-    letter-spacing: 5px;
 }
 
 .pagination a.active {
