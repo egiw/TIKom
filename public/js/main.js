@@ -19,7 +19,22 @@ $(document).on('pjax:end', function(e) {
 });
 
 $(document).on('submit', 'form[data-pjax]', function(e) {
-    $.pjax.submit(e, '#pjax-container');
+    $.pjax.submit(e, '#pjax-container', {
+        data: new FormData(e.currentTarget),
+        cache: false,
+        processData: false,
+        contentType: false,
+        xhr: function() {
+            var xhr = $.ajaxSettings.xhr();
+            if (xhr.upload) {
+                xhr.upload.addEventListener('progress', function(e) {
+                    var percentage = event.loaded / event.total * 100;
+                    console.log(percentage);
+                }, false);
+            }
+            return xhr;
+        }
+    });
 });
 
 $(document).ready(function() {

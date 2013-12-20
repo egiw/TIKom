@@ -7,11 +7,15 @@
 {% block content %}
 <section>
     <h1>Create New Article</h1>
-    <form method="post" data-pjax>
+    <form method="post" data-pjax enctype="multipart/form-data" id="form">
         <fieldset>
             <legend>Write your new article and click post when done.</legend>
             <label for="title">Title</label><br />
             <input type="text" name="title" id="title" size="50"/>
+            <br />
+            <label for="image">Image</label>
+            <br />
+            <input type="file" name="image" id="image" />
             <br /><br />
             <textarea name="content" id="content" cols="50" rows="10"></textarea>
             <br />
@@ -23,7 +27,7 @@
 
 {% block scripts %}
     {{ parent() }}
-    <script type="text/javascript">
-        CKEDITOR.replace('content');
-    </script>
+<script type="text/javascript">
+    CKEDITOR.replace('content');
+</script>
 {% endblock %}

@@ -14,7 +14,8 @@ use \Twig_Extension_Debug;
  * 
  * @property Twig $view Twig
  */
-class Application extends Slim {
+class Application extends Slim
+{
 
     /**
      * Doctrine EntityManager
@@ -32,18 +33,18 @@ class Application extends Slim {
     {
         parent::__construct(array(
             'templates.path' => '../templates/basic',
-            'view' => 'Slim\Views\Twig'
+            'view'           => 'Slim\Views\Twig'
         ));
 
         $this->setName('TikomLab');
 
         $this->view->parserOptions = array(
-            'charset' => 'utf-8',
-            'cache' => realpath('../templates/cache'),
-            'auto_reload' => true,
+            'charset'          => 'utf-8',
+            'cache'            => realpath('../templates/cache'),
+            'auto_reload'      => true,
             'strict_variables' => false,
-            'auto_escape' => true,
-            'debug' => true
+            'auto_escape'      => true,
+            'debug'            => true
         );
 
         $this->view->parserExtensions = array(
@@ -56,12 +57,12 @@ class Application extends Slim {
         $config = Setup::createAnnotationMetadataConfiguration(array(realpath('../src')), $isDevMode);
 
         $conn = array(
-            'driver' => 'pdo_mysql',
-            'host' => 'localhost',
-            'user' => 'root',
-            'password' => '',
-            'dbname' => 'Blog',
-            'charset' => 'utf8',
+            'driver'        => 'pdo_mysql',
+            'host'          => 'localhost',
+            'user'          => 'root',
+            'password'      => '',
+            'dbname'        => 'Blog',
+            'charset'       => 'utf8',
             'driverOptions' => array(
                 1002 => 'SET NAMES utf8'
             )
@@ -128,7 +129,8 @@ class Application extends Slim {
 
     public function store()
     {
-        $data = $this->request()->post();
+        var_dump($_FILES, $_POST);
+        exit;
         $article = new Article();
         $article->setTitle($data['title']);
         $article->setContent($data['content']);
@@ -154,8 +156,8 @@ class Application extends Slim {
         $pageCount = ceil($count / $limit);
 
         $this->render('manage.twig', array(
-            'articles' => $articles,
-            'pageCount' => $pageCount,
+            'articles'    => $articles,
+            'pageCount'   => $pageCount,
             'currentPage' => (int) $page
         ));
     }
